@@ -21,7 +21,7 @@ Este projeto é uma estrutura modular em PHP puro (sem frameworks), organizado e
 ## 🚀 Instalação
 
 Adicione a classe ao seu projeto (via autoloader do Composer)
-[Composer](https://packagist.org/packages/ismaelbrito/dot-env):
+[Composer](https://packagist.org/packages/ismaelbrito/database-manager):
 
 ```bash
 composer require ismaelbrito/database-manager
