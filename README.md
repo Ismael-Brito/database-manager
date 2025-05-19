@@ -1,76 +1,186 @@
-# MeuDotEnv PORTUGUÊS
+# Database PORTUGUÊS
 
-Leitor de variáveis `.env` leve e direto para projetos PHP.
+Este projeto é uma estrutura modular em PHP puro (sem frameworks), organizado em uma classe simples para gerenciar conexões e operações com bancos de dados usando PDO.
 
-Este pacote permite carregar variáveis de ambiente a partir de um arquivo `.env` para usar com `getenv()`, `$_ENV` ou `$_SERVER`, sem dependências externas além do PHP.
+## 🚀 Funcionalidades
+
+- Inserção de dados
+- Totalmente orientado a objetos
+- Conexão com banco de dados MySQL via PDO
+- Classe de banco de dados com suporte a:
+  - `select`, `insert`, `update`, `delete`
+  - Tipagem moderna (`string`, `array`, `PDOStatement`, etc)
+  - Conexão via PDO com tratamento de erros
+- Seleção com cláusulas WHERE, ORDER BY, LIMIT
+- Atualização e exclusão de registros
+- Interface fluida e fácil de usar
+- Preparado para uso em ambiente local (WAMP) e produção
 
 ---
 
 ## 🚀 Instalação
 
-Via [Composer](https://getcomposer.org):
+Adicione a classe ao seu projeto (via autoloader do Composer)
+[Composer](https://packagist.org/packages/ismaelbrito/dot-env):
 
 ```bash
-composer require ismaelbrito/dot-env
+composer require ismaelbrito/database-manager
 
 ```
 
 ## Como Usar
 
-O uso da library e simples, primeiro crie um arquivo `.env` na raiz do seu projeto, seguindo o modelo abaixo (uma variável por linha):
+O uso da library e simples, seguindo o modelo abaixo:
 
 ```
-DB_HOST=localhost
-DB_USER=root
-DB_PASS=pass
-```
-
-```php
 <?php
 
 require 'vendor/autoload.php';
 
-//CARREGAR VARIAVEIS DE AMBIENTE DO ARQUIVO NA RAIZ
-ismaelbrito\DotEnv\Environment::load(__DIR__);
+use IsmaelBrito\DatabaseManager\Database;
 
-//OBTENHA VARIÁVEL DE AMBIENTE
-echo getenv('DB_HOST');
+Database::config(
+  'localhost',       // host
+  'nome_do_banco',   // nome do banco
+  'usuario',         // usuário
+  'senha',           // senha
+  3306               // porta (opcional, padrão é 3306)
+);
+
+```
+
+## 🧪 Exemplos de Uso
+
+```php
+
+
+/*Criar uma instância*/
+$db = new Database('usuarios'); // nome da tabela
+
+
+/*Inserir dados*/
+$id = $db->insert([
+  'nome' => 'Ismael Brito',
+  'email' => 'ismael@email.com'
+]);
+
+
+/*Selecionar dados*/
+$results = $db->select('id > 10', 'id DESC', '10');
+
+foreach ($results as $row) {
+  print_r($row);
+}
+
+
+/*Atualizar dados*/
+$db->update('id = 1', [
+  'nome' => 'Ismael Atualizado'
+]);
+
+
+/*Deletar dados*/
+$db->delete('id = 1');
+
+
+/*Acessar o objeto PDO diretamente*/
+$pdo = $db->getConnection();
+
 
 ```
 
 ## Requisitos
 
-Esta biblioteca requer PHP 7.0 ou superior.
+- Esta biblioteca requer PHP 7.0 ou superior.
+- Extensão PDO habilitada
 
 ---
 
-# PHP Environment Variables Manager INGLÊS
 
-A simple library for managing environment variables in PHP.
+# Database (ENGLISH)
 
-## Usage
+This project is a modular structure built with pure PHP (no frameworks), organized into a simple class to manage database connections and operations using PDO.
 
-To use this library, simply create a `.env` file at the root of the project, following the model below (one variable per line):
+## 🚀 Features
 
+- Data insertion
+- Fully object-oriented
+- MySQL database connection via PDO
+- Database class supports:
+  - `select`, `insert`, `update`, `delete`
+  - Modern type hinting (`string`, `array`, `PDOStatement`, etc.)
+  - PDO connection with error handling
+- Select queries with `WHERE`, `ORDER BY`, `LIMIT` clauses
+- Record updates and deletions
+- Simple and intuitive interface
+- Ready for use in both local (e.g., WAMP) and production environments
+
+---
+
+## 🚀 Installation
+
+Add the class to your project via Composer's autoloader:  
+[Composer - Packagist](https://packagist.org/packages/ismaelbrito/database-manager)
+
+```bash
+composer require ismaelbrito/database-manager
 ```
-DB_HOST=localhost
-DB_USER=root
-DB_PASS=pass
-```
+
+## 📦 How to Use
+
+Using this library is simple, just follow the example below:
 
 ```php
 <?php
 
 require 'vendor/autoload.php';
 
-//LOAD ENVIRONMENT VARS FROM FILE ON ROOT
-ismaelbrito\DotEnv\Environment::load(__DIR__);
+use IsmaelBrito\DatabaseManager\Database;
 
-//GET ENVIRONMENT VAR
-echo getenv('DB_HOST');
+Database::config(
+  'localhost',       // host
+  'database_name',   // database name
+  'username',        // user
+  'password',        // password
+  3306               // port (optional, default is 3306)
+);
+```
+
+## 🧪 Usage Examples
+
+```php
+/* Create an instance */
+$db = new Database('users'); // table name
+
+/* Insert data */
+$id = $db->insert([
+  'name' => 'Ismael Brito',
+  'email' => 'ismael@email.com'
+]);
+
+/* Select data */
+$results = $db->select('id > 10', 'id DESC', '10');
+
+foreach ($results as $row) {
+  print_r($row);
+}
+
+/* Update data */
+$db->update('id = 1', [
+  'name' => 'Updated Ismael'
+]);
+
+/* Delete data */
+$db->delete('id = 1');
+
+/* Access the PDO object directly */
+$pdo = $db->getConnection();
 
 ```
 
-## Requirements
+## 📋 Requirements
 
-This library needs PHP 7.0 or greater.
+- This library requires PHP 7.0 or higher
+- PDO extension must be enabled
+
+---
