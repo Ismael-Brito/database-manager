@@ -1,6 +1,6 @@
 {
     "name": "ismaelbrito/database-manager",
-    "description": "A simple library for managing database connections, results pagination and building queries in PHP.",
+    "description": "Biblioteca em PHP para gerenciar conexões e operações com MySQL usando PDO, com suporte a CRUD e tipagem moderna.",
     "type": "library",
     "license": "GPL-3.0-or-later",
     "autoload": {
