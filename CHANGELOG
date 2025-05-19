@@ -1,0 +1,15 @@
+# Changelog
+
+Todas as mudanças notáveis deste projeto serão documentadas aqui.
+
+O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto segue a [SemVer](https://semver.org/lang/pt-BR/).
+
+## [1.0.0] - 2025-05-19
+
+### Adicionado
+- Primeira versão estável do pacote `database-manager`.
+- Autoload via PSR-4.
+- Compatível com PHP 7.0 ou superior.
+
+### Considerações
+- Esta versão estável é adequada para uso em produção em projetos PHP.
