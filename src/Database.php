@@ -83,6 +83,11 @@ class Database
    */
   private function setConnection()
   {
+    
+    if (!self::$host || !self::$name || !self::$user) {
+        throw new \RuntimeException('Configuração do banco incompleta.');
+    }
+    
     try {
       $this->connection = new PDO('mysql:host=' . self::$host . ';dbname=' . self::$name . ';port=' . self::$port, self::$user, self::$pass);
       $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -99,6 +104,18 @@ class Database
     return $this->connection;
   }
 
+  public function beginTransaction(): void {
+    $this->connection->beginTransaction();
+  }
+  
+  public function commit(): void {
+    $this->connection->commit();
+  }
+  
+  public function rollBack(): void {
+    $this->connection->rollBack();
+  }
+
 
   /**
    * Método responsável por executar queries dentro do banco de dados
@@ -106,7 +123,7 @@ class Database
    * @param  array  $params
    * @return PDOStatement
    */
-  public function execute($query, $params = [])
+  public function execute(string $query, array $params = []): PDOStatement
   {
     try {
       $statement = $this->connection->prepare($query);
@@ -193,13 +210,13 @@ class Database
    * @param  string $where
    * @return boolean
    */
-  public function delete($where)
+  public function delete(string $where, array $params = []): bool
   {
     //MONTA A QUERY
     $query = 'DELETE FROM ' . $this->table . ' WHERE ' . $where;
 
     //EXECUTA A QUERY
-    $this->execute($query);
+    $this->execute($query, $params);
 
     //RETORNA SUCESSO
     return true;
