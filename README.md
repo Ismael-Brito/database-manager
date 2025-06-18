@@ -11,6 +11,10 @@ Este projeto é uma estrutura modular em PHP puro (sem frameworks), organizado e
   - `select`, `insert`, `update`, `delete`
   - Tipagem moderna (`string`, `array`, `PDOStatement`, etc)
   - Conexão via PDO com tratamento de erros
+- Métodos disponíveis:
+  - `beginTransaction()`: Inicia a transação.
+  - `commit()`: Confirma todas as operações realizadas durante a transação.
+  - `rollBack()`: Reverte todas as opreações em caso de erro.
 - Seleção com cláusulas WHERE, ORDER BY, LIMIT
 - Atualização e exclusão de registros
 - Interface fluida e fácil de usar
@@ -88,6 +92,45 @@ $pdo = $db->getConnection();
 
 
 ```
+
+## Exemplos de uso das Transações
+
+```php
+
+use IsmaelBrito\DatabaseManager\Database;
+
+$db = new Database('usuarios');
+
+try {
+    $db->beginTransaction();
+
+    $db->insert([
+        'nome' => 'Ismael',
+        'email' => 'ismael@email.com'
+    ]);
+
+    $db->update('id = ?', [
+        'nome' => 'Ismael Brito',
+        1
+    ]);
+
+    $db->commit();
+    echo 'Transação concluída com sucesso!';
+} catch (Exception $e) {
+    $db->rollBack();
+    echo 'Erro na transação: ' . $e->getMessage();
+}
+
+
+```
+
+## 🛑 IMPORTANTE 
+
+- Sempre envolva transações em blocos `try/catch`.
+- Use `rollBack()` dentro do `catch` para garantir integridade dos dados.
+- Após `commit()` ou `rollBack()`, a transação é finalizada - uma nova deve ser iniciada se necessário
+
+---  
 
 ## Requisitos
 
